@@ -59,15 +59,24 @@ def handleAspect(aspect, content, context):
     elif pointcut == '@aspect':
         return handleAnnotatedAspect(aspect, content,context)    
     
-    if aspect.get('trim-pointcut', True):
-        pointcut=pointcut.strip()                
+    if aspect.get('trim-pointcut', True):        
+        if(type(pointcut) == str):
+            pointcut=pointcut.strip()
+        elif type(pointcut) == list:
+            for i, m in enumerate(pointcut):
+                pointcut[i]=m.strip()        
         
     matchType=aspect.get('match-type','exact')    
     contentRange=codeInjector.textUtil.ContentRange(content)
     processCounter=0    
-    while contentRange.ifFinished() == False:
-        range=codeInjector.textUtil.findText(contentRange, pointcut,matchType)
-        
+    while contentRange.ifFinished() == False:        
+        if(type(pointcut) == str):
+            range=codeInjector.textUtil.findText(contentRange, pointcut,matchType)
+        elif type(pointcut) == list:            
+            for(i, m) in enumerate(pointcut):                
+                range=codeInjector.textUtil.findText(contentRange, m,matchType)
+                if range.start >=0:
+                    break        
         if range.start == -1:
             if processCounter == 0:
                 return ('text:{pointcut}: not found '.format(pointcut=pointcut), content)
