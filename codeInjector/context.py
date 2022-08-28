@@ -18,6 +18,11 @@ def createApp(appName, branch="", version="", env=""):
     apps[appName].env=env   
     return apps[appName]
 
+def setVersionSuffix(appName, versionSuffix):
+    if(apps[appName]!=None and apps[appName].version!=None):
+        apps[appName].version=apps[appName].version+versionSuffix
+        
+
 
 def getAppContext(appName):
     createAppIfEmpty(appName)
