@@ -48,10 +48,12 @@ def checkAspectCondition(aspect, context, file, content=None):
     skipIfNotFound=aspect.get('skip-if-not-found')
     if not skipIfNotFound == None:
         if type(skipIfNotFound) == str:            
+            skipIfNotFound=skipIfNotFound.strip()
             if content.find(skipIfNotFound)<0:
                 return False
         elif type(skipIfNotFound) == list:
             for i, m in enumerate(skipIfNotFound):
+                m=m.strip()
                 if content.find(m)<0:
                     return False
 
