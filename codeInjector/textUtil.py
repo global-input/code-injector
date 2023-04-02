@@ -207,12 +207,48 @@ def findTextWithRegex(contentRange, regExpression):
     return range
 
 def findText(contentRange, textToFind, matchType):
-    if matchType == 'exact':
+    if matchType == 'exact' or matchType == 'function':
         return fineTextExact(contentRange, textToFind)
     elif matchType == 'regex':
         return findTextWithRegex(contentRange, textToFind)
     else:
         return BlockRange()
+
+
+def parse_parentheses(content, function_name):
+    start_index = content.find(function_name + '(')
+    if start_index == -1:
+        return None
+
+    start_index += len(function_name)
+
+    end_index = content.find(')', start_index)
+    if end_index == -1:
+        return None
+
+    between = content[start_index+1:end_index]
+
+    return between
+
+def replace_parameters(function_call, function_name, new_parameters):
+    parameters_start = function_call.find(function_name + '(') + len(function_name)
+    parameters_end = function_call.find(')', parameters_start)
+    return function_call[:parameters_start+1] + new_parameters + function_call[parameters_end:]
+
+def copyInputParameters(content, search, replace):
+    search_function_name = search.split('(')[0].strip()
+    replace_function_name = replace.split('(')[0].strip()
+
+    content_parameters = parse_parentheses(content, search_function_name)
+
+    if content_parameters is None:
+        raise None
+
+    new_search = replace_parameters(search, search_function_name, content_parameters)
+    new_replace = replace_parameters(replace, replace_function_name, content_parameters)
+
+    return (new_search, new_replace)
+
 
 
 if __name__ == "__main__":
