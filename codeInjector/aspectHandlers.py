@@ -79,7 +79,11 @@ def handleAspect(aspect, content, context):
                     break        
         if range.start == -1:
             if processCounter == 0:
-                return ('text:{pointcut}: not found '.format(pointcut=pointcut), content)
+                aspectOptional=aspect.get('optional',False)
+                if aspectOptional:
+                    return ('', content)
+                else:
+                    return ('text:{pointcut}: not found '.format(pointcut=pointcut), content)
             else:
                 break
         processCounter=processCounter+1        
