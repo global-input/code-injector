@@ -18,10 +18,15 @@ def createApp(appName, branch="", version="", env=""):
     apps[appName].env=env   
     return apps[appName]
 
+REPLACE_IDENTIFIER="REPLACE:"    
+
 def setVersionSuffix(appName, versionSuffix):
-    if(apps[appName]!=None and apps[appName].version!=None):
-        apps[appName].version=apps[appName].version+versionSuffix
-        
+    app = apps.get(appName)
+    if app is not None and app.version is not None:
+        if versionSuffix.startswith(REPLACE_IDENTIFIER):
+            app.version = versionSuffix[len(REPLACE_IDENTIFIER):]  # Replace the version with the string after '---'
+        else:
+            app.version += versionSuffix
 
 
 def getAppContext(appName):
