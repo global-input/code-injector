@@ -2,7 +2,7 @@ import getopt
 import sys
 
 import codeInjector.context
-from hello.actions import HelloAction
+from documentations.lab.driver.hello.actions import HelloAction
 
 
 ARGUMENTS = ["branch=", "version=", "env=", "job=", "app="]
