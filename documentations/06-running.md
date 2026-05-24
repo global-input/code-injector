@@ -73,7 +73,7 @@ Extra arguments:
     "player": "true",
     "storage": "false",
     "performance": "true",
-    "conviva": "false",
+    "observable": "false",
     "org": "true"
   },
   "usePlusUser": false,

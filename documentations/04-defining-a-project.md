@@ -27,7 +27,7 @@ aspect-project/
 │       │   └── remote-log/     # a library copied into the target project
 │       ├── fixes/              # build-fix aspect groups
 │       ├── build/              # prebuild preparation aspects
-│       └── …                   # adobe/, conviva/, kantar/, video/, youview/, …
+│       └── …                   # adobe/, observable/, iterative/, video/, youview/, …
 ├── lib/
 │   └── remoteLogs.js           # static lib copied into the target as src/static/remoteLogs.js
 └── patches/                    # raw .patch files for changes too large for aspects
